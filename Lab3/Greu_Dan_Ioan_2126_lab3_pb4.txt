@@ -1,0 +1,16 @@
+/*4. Scrieti o aplicatie Java care defineste o valoare intreaga si apoi afiseaza reprezentarea ei binară, octală și
+hexazecimală. Scrieți metode de conversie a valorii citite în diferite baze de numeratie.
+*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args) {
+        System.out.println("Introduceti un numar intreg");
+        Scanner in = new Scanner(System.in);
+        int numar = in.nextInt();
+        System.out.println("Analiza numarului:*********************"+numar+"***********************************");
+        System.out.println("Numarul in baza 2: "+Integer.toBinaryString(numar));
+        System.out.println("Numarul in baza 8: "+ Integer.toOctalString(numar));
+        System.out.println("Numarul in baza 10: "+numar);
+        System.out.println("Numarul in baza 16:"+"0x"+Integer.toHexString(numar));
+    }
+}

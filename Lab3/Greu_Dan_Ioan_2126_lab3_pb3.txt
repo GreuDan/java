@@ -1,0 +1,22 @@
+/*2. Cititi un sir de caractere de la intrarea standard. Transformati sirul intr-un tablou de caractere. Cautati in acest
+tablou un caracter specificat in program. Afisati numarul de aparitii.
+*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args) {
+        System.out.println("Introduceti sirul de caractere");
+        Scanner in = new Scanner(System.in);
+        String art = in.nextLine();
+        char[] caractere=new char[art.length()];
+        caractere=art.toCharArray();
+        int count = 0;
+        for (int i = 0; i < caractere.length; i++) {
+            if (caractere[i] == 'e') {
+                count++;
+            }
+        }
+        System.out.println("Numarul de aparitii a caracterului e este: "+count);
+        in.close();
+
+    }
+}

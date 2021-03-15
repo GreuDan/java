@@ -1,0 +1,134 @@
+/*11. Implementați jocul X-0 naiv ca și joc automat. Programul va selecta aleator la fiecare pas o poziție pe care o va
+completa fie cu X, fie cu 0 în mod alternativ. Poziția selectată nu poate fi una completată deja. Jocul se termină
+atunci când nu mai există casuțe libere sau când unul dintre jucători a obținut o linie, coloană sau diagonală
+completă. Afișați pe ecran fiecare pas al algoritmului sub forma unei matrici, caracterul * va reprezenta o casuță
+necompletată.
+*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        System.out.println("Introduceti dimensiunea jocului ");
+        int size=in.nextInt();
+        TicTacToe operator=new TicTacToe(size);
+        operator.AfisareTabla();
+        int count=1;
+        while(true){
+            if(count%2!=0) operator.GenereazaSimbol("X");
+            else operator.GenereazaSimbol("O");
+            operator.AfisareTabla();
+            count++;
+            if(operator.Castigator()!=0) break;
+        }
+    }
+
+}
++++++++++++++++++++++++++
+TicTacToe.java
++++++++++++++++++++++++++
+import java.util.Random;
+class TicTacToe {
+    int size;
+    String[] verificare;
+    String[][] tabla;
+    TicTacToe(int size){
+        this.size = size;
+        verificare=new String[this.size*this.size];
+        for(int i=0;i<this.size*this.size;i++){
+            verificare[i]="0";
+        }
+        tabla=new String[this.size][this.size];
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                tabla[i][j]="*";
+            }
+        }
+    }
+    void AfisareTabla() {
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++) {
+                System.out.print(tabla[i][j]);
+            }
+            System.out.println("\n");
+        }
+        System.out.println("-----------");
+    }
+    void GenereazaSimbol(String simbol1){
+        Random random=new Random();
+        int element=random.nextInt(size*size+1);
+        if(element==size*size) element=-1;
+        if(element==-1) element+=1;
+        if(verificare[element].equals("0")){
+            verificare[element]="1";
+            int nr=0;
+            for (int i = 0; i < size; i++){
+                for (int j = 0; j < size; j++) {
+                    if(nr==element) tabla[i][j]=simbol1;
+                    nr++;
+                }
+            }
+        }
+        else{
+            GenereazaSimbol(simbol1);
+        }
+    }
+    int Castigator(){
+        int ok=0;
+        for(int i=0;i<size;i++){
+            ok=0;
+            for(int j=0;j<size-1;j++){
+                if( !(tabla[i][j].equals("*"))){
+                    if(tabla[i][j].equals(tabla[i][j+1])) ok++;
+                }
+
+            }
+            if(ok==size){
+                System.out.println("Joc terminat! Castigator ");
+                return 1;
+            }
+        }
+        for(int i=0;i<size;i++){
+            int j;
+            ok=0;
+            for(j=0;j<size-1;j++){
+                if( !(tabla[j][i].equals("*"))){
+                    if(tabla[j][i].equals(tabla[j+1][i])) ok++;
+                }
+            }
+            if(ok==size){
+                System.out.println("Joc terminat!");
+                return 1;
+            }
+        }
+        for(int i=0;i<size-1;i++){
+            ok=0;
+            if(!(tabla[i][i].equals("*")))
+                if(tabla[i][i].equals(tabla[i+1][i+1]))ok++;
+        }
+        if(ok==size){
+            System.out.println("Joc terminat!");
+            return 1;
+        }
+        for(int i=0;i<size-1;i++) {
+            ok=0;
+            for(int j=0;j<size;j++){
+                if(!(tabla[i][size-1-j].equals("*")))
+                    if(tabla[i][size-1-j].equals(tabla[i+1][size-1-j])) ok++;
+            }
+        }
+        if(ok==size){
+            System.out.println("Joc terminat!");
+            return 1;
+        }
+        int count=0;
+        for(int i=0;i<size*size;i++){
+            if(verificare[i].equals("1")) count++;
+        }
+        if(count==size*size){
+            System.out.println("Joc terminat!");
+            return 1;
+        }
+        return 0;
+    }
+}
+

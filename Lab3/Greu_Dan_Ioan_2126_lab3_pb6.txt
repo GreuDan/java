@@ -1,0 +1,25 @@
+/*6. Scrieti un program Java care genereaza 2
+ valori aleatoare si efectueaza asupra lor cateva operatii matematice
+*/
+import java.util.Random;
+class Exercitii_labs {
+    public static void main(String[] args) {
+        Random random = new Random();
+        int nr1= random.nextInt(100);
+        int nr2= random.nextInt(100);
+        System.out.println("Numerele generate sunt: "+nr1+" si "+nr2);
+        System.out.println("Suma numerelor este: "+(nr1+nr2));
+        System.out.println("Diferenta in modul a numerelor este: "+(int)(Math.sqrt((nr1-nr2)*(nr1-nr2))));
+        System.out.println("Produsul celor doua numere este: "+Math.multiplyExact(nr1,nr2));
+        System.out.println("Radical din suma patratelor numerelor este:" +(long)Math.hypot(nr1,nr2));
+        System.out.println("Suma logaritmilor in baza zece a numerelor este: "+(Math.log10(nr1)+Math.log10(nr2)));
+
+
+
+
+
+
+
+
+    }
+}

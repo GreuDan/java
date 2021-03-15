@@ -1,0 +1,73 @@
+/*10. Fie un algoritm de criptare în cadrul căruia se ia un text de intrare ‘A’ format din
+litere mici și mari.
+Separat se definește un șir de caractere ”B” cărora li se asociază aleator câte
+ un număr întreg de la 1 la 100.
+ Algoritmul verifică dacă literele din șirul B există în șirul A și face suma numerelor asociate acestora.
+La suma finală se adaugă pozițiile din șirul A la care au fost găsite caracterele din șirul B.
+Dacă suma finală este mai mare de 100,
+criptarea a fost validă. Afișați un mesaj corespunzător.
+Exemplu:
+Șirul A = ”aTmPpDsst”
+Șirul B =”ams”
+Valorile asociate elementelor din șirul B: 11 33 7
+Suma: (11+33+7+7)+(1+3+7+8)=77 -> CRIPTARE NEVALIDĂ
+*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        String sirulA=in.nextLine();
+        String sirulb=in.nextLine();
+        Criptare sirulB=new Criptare(sirulb);
+        sirulB.setNumereCodare();
+        sirulB.Validare(sirulA);
+    }
+
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Criptare.java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.util.Random;
+class Criptare {
+    private char[] sirulB;
+    private int[] numereCodare;
+    Criptare(String sir){
+        sirulB=new char[sir.length()];
+        sirulB=sir.toCharArray();
+
+    }
+    void setNumereCodare(){
+        Random random=new Random();
+        numereCodare=new int[sirulB.length];
+        for(int i=0;i< sirulB.length;i++){
+            int numar= random.nextInt(101);
+            if (numar>=1) numereCodare[i]=numar;
+            else{
+                numar= random.nextInt(101);
+                numereCodare[i]=numar;
+            }
+        }
+        System.out.println("Numerele asociate sirului B: ");
+        for(int i=0;i< sirulB.length;i++){
+            System.out.print(numereCodare[i]+" ");
+        }
+    }
+    void Validare(String sirulA){
+        int sumaPozitii=0;
+        int validare=0;
+        for(int i=0;i<sirulA.length();i++){
+            for(int j=0;j< sirulB.length;j++){
+                if(sirulA.charAt(i)==sirulB[j]){
+                    sumaPozitii+=i+1;
+                    validare+=numereCodare[j];
+                }
+            }
+        }
+        validare+=sumaPozitii;
+        System.out.println("Numar de validare: "+validare);
+        if(validare>100){
+            System.out.println("Criptare VALIDATA");
+        }
+        else System.out.println("Criptare NEVALIDATA");
+    }
+}

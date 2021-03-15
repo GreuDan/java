@@ -1,0 +1,61 @@
+/*1. Scrieti o aplicatie Java in care cititi o valoare intreaga. In cazul in
+        care valoarea intreaga este cuprinsa intre 1-12
+        sa se afiseze luna corespunzatoare. Considerati
+        cazul in care valoarea introdusa este un sir de caractere si daca
+        aceasta corespunde unei luni din an afisati valoarea numerica a lunii.
+*/
+import java.util.List;
+import java.util.Scanner;
+import java.util.ArrayList;
+class Exercitii_labs {
+    static void CeLunaE(List<String> calendar){
+        calendar.add(0,"ianuarie");
+        calendar.add(1,"februarie");
+        calendar.add(2,"martie");
+        calendar.add(3,"aprilie");
+        calendar.add(4,"mai");
+        calendar.add(5,"iunie");
+        calendar.add(6,"iulie");
+        calendar.add(7,"august");
+        calendar.add(8,"septembrie");
+        calendar.add(9,"octombrie");
+        calendar.add(10,"noiembrie");
+        calendar.add(11,"decembrie");
+    }
+    public static void main(String[] args){
+        System.out.println("Introduceti numele sau numarul unei luni");
+        List<String> calendar=new ArrayList<String>();
+        Scanner in=new Scanner(System.in);
+        CeLunaE(calendar);
+        try{
+            Integer a=in.nextInt();
+            a-=1;
+            if(a>=0 && a<12){
+                System.out.println(calendar.get(a).toUpperCase());
+                in.close();
+            }else{
+                System.out.println("Numarul nu e intre 1-12");
+            }
+
+        }catch (Exception e) { }
+        finally{
+            int nr=1;
+            try {
+                String a = in.next().toLowerCase();
+                for(int i=0;i<12;i++){
+                    if(calendar.get(i).equals(a)) {
+                        nr=0;
+                        System.out.println(i + 1);
+                        break;
+                    }
+                }
+                if(nr==1){
+                    System.out.println("Numele lunii e introdus gresit");
+                }
+
+            }catch (Exception e) { }
+        }
+        in.close();
+
+    }
+}

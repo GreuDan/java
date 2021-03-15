@@ -1,0 +1,112 @@
+import java.util.Scanner;
+
+/*8. Sa se citeasca de la tastatura elementele unei matrice
+de valori intregi cu m linii (m preluat din linia de
+comanda). Pentru fiecare linie numarul de elemente va creste
+cu 1 fata de linia precedenta, prima linie avand
+doar un element.
+Sa se implementeze metodele care:
+− afiseaza matricea linie cu linie, apoi coloana cu coloana;
+− elimina din matrice (egalizeaza cu 0) valorile care nu sunt
+ cuprinse intre doua limite specificate
+− afiseaza vecinii existenti ai unui element a carui indecsi sunt trimisi ca parametri
+*/
+class Exercitii_labs {
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        int n=in.nextInt();
+        int[][] a=new int[n][n];
+        System.out.println("Scrieti limitele unui interval:");
+        int min= in.nextInt(), max=in.nextInt();
+        System.out.println("Introduceti indecsi unui element existent");
+        int axaI=in.nextInt(),axaJ=in.nextInt();
+        if(min>max){
+            int vas=min;
+            min=max;
+            max=vas;
+        }
+        Matricea matrice=new Matricea(n);
+        matrice.AfisareLinii();
+        matrice.AfisareColoane();
+        matrice.EliminaValori(min,max);
+        matrice.CareEsteVecinul(axaI,axaJ);
+    }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Matircea.java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.util.Scanner;
+class Matricea {
+    int[][] matrice;
+    int n;
+    Matricea(int n){
+        this.n=n;
+        Scanner in=new Scanner(System.in);
+        matrice=new int[n][n];
+        System.out.println("Introduceti elemente in matrice: ");
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=i;j++){
+                matrice[i][j]=in.nextInt();
+            }
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=i;j++){
+                System.out.print(matrice[i][j]+" ");
+            }
+            System.out.println("\n");
+        }
+        in.close();
+    }
+    void AfisareLinii(){
+        for(int i=0;i<n;i++){
+            System.out.print("Elementele de pe linia "+(i+1)+": ");
+            for(int j=0;j<=i;j++){
+                System.out.print(matrice[i][j]+" ");
+            }
+            System.out.println("\n");
+        }
+    }
+    void AfisareColoane(){
+        for(int j=0;j<n;j++){
+            System.out.print("Elementele de pe coloana "+(j+1)+": ");
+            for(int i=j;i<n;i++){
+                System.out.print(matrice[i][j]+" ");
+            }
+            System.out.println("\n");
+        }
+    }
+    void EliminaValori(int min,int max){
+        System.out.println("Matricea creata dupa eliminare este: ");
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=i;j++){
+                if(matrice[i][j]<min || matrice[i][j]>max){
+                    matrice[i][j]=0;
+                }
+                System.out.print(matrice[i][j]+" ");
+            }
+            System.out.println("\n");
+        }
+    }
+    void CareEsteVecinul(int axaI,int axaJ){
+        System.out.println("Se incarca vecinii elementului "+matrice[axaI][axaJ]+":");
+        if(axaI==axaJ){
+            if(axaJ-1>=0){
+                System.out.print(matrice[axaI][axaJ-1]+" ");
+            }
+            if(axaI+1!=n){
+                System.out.print(matrice[axaI+1][axaJ]+" ");
+            }
+        }
+        else{
+            System.out.println(matrice[axaI-1][axaJ]+" ");
+            if(axaJ-1>=0){
+                System.out.print(matrice[axaI][axaJ-1]+" ");
+            }
+            if(axaI+1!=n){
+                System.out.print(matrice[axaI+1][axaJ]+" ");
+            }
+
+            System.out.println(matrice[axaI][axaJ+1]+" ");
+        }
+    }
+}

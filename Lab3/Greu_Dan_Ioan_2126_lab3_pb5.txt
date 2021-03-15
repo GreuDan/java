@@ -1,0 +1,166 @@
+/*5. Implementati algoritmii cunoscuti de ordonare a
+sirurilor numerice (bubble sort, insertion sort, quick sort, etc.)
+si aplicati-i asupra unui sir de valori intregi citite de la tastatura.
+
+*/
+import java.util.Scanner;
+
+class Exercitii_labs {
+    static void BubbleSort(int[] numar){
+        for (int i = 0; i < numar.length-1; i++)
+            for (int j = 0; j < numar.length-i-1; j++)
+                if (numar[j] > numar[j+1])
+                {
+                    int vas = numar[j];
+                    numar[j] = numar[j+1];
+                    numar[j+1] = vas;
+                }
+
+    }
+    static int Particularizare(int[] numar,int mic,int mare){
+        int tarus = numar[mare];
+        int i = (mic - 1);
+
+        for (int j = mic; j <= mare - 1; j++)
+        {
+            if (numar[j] < tarus)
+            {
+                i++;
+                int vas=numar[j];
+                numar[j]=numar[i];
+                numar[i]=vas;
+            }
+        }
+        int vas=numar[i+1];
+        numar[i+1]=numar[mare];
+        numar[mare]=vas;
+        return (i + 1);
+    }
+    public static void InsertionSort(int[] numar){
+        for (int i = 1; i < numar.length; ++i) {
+            int joker = numar[i];
+            int j = i - 1;
+
+            while (j >= 0 && numar[j] > joker) {
+                numar[j + 1] = numar[j];
+                j = j - 1;
+            }
+            numar[j + 1] = joker;
+        }
+
+    }
+    static void QuickSort(int[] numar,int mic,int mare){
+
+        if (mic < mare)
+        {
+            int point = Exercitii_labs.Particularizare(numar, mic, mare);
+
+            Exercitii_labs.QuickSort(numar, mic, point - 1);
+            Exercitii_labs.QuickSort(numar, point + 1, mare);
+        }
+
+    }
+    public static void SelectionSort(int[] numar){
+        for (int i = 0; i < numar.length-1; i++)
+        {
+            int min = i;
+            for (int j = i+1; j < numar.length; j++)
+                if (numar[j] < numar[min])
+                    min = j;
+            int vas = numar[min];
+            numar[min] = numar[i];
+            numar[i] = vas;
+        }
+
+    }
+    public static void CocktailSort(int[] numar){
+        boolean verifica = true;
+        int plecare = 0;
+        int sfarsit = numar.length;
+
+        while (verifica == true)
+        {
+            verifica = false;
+            for (int i = plecare; i < sfarsit - 1; ++i)
+            {
+                if (numar[i] > numar[i + 1]) {
+                    int vas = numar[i];
+                    numar[i] = numar[i + 1];
+                    numar[i + 1] = vas;
+                    verifica = true;
+                }
+            }
+            if (verifica == false)
+                break;
+            verifica = false;
+            sfarsit -= 1;
+            for (int i = sfarsit - 1; i >= sfarsit; i--)
+            {
+                if (numar[i] > numar[i + 1])
+                {
+                    int vas = numar[i];
+                    numar[i] = numar[i + 1];
+                    numar[i + 1] = vas;
+                    verifica = true;
+                }
+            }
+            plecare+=1;
+        }
+    }
+    public static void afisare(int[] numar){
+        for(int i=0;i<numar.length;i++){
+            System.out.print(numar[i]+" ");
+        }
+    }
+    public static void main(String[] args) {
+        System.out.println("Introduceti numarul de elemente intreg");
+        Scanner in = new Scanner(System.in);
+        int nr = in.nextInt();
+        int[] numar=new int[nr];
+        for(int i=0;i<nr;i++){
+            numar[i]=in.nextInt();
+        }
+        System.out.println("Introduceti o valoare de la 1-5 pt un algoritm de sortare");
+        int val=in.nextInt();
+        switch(val){
+            case 1:
+                System.out.println("Prin cocktail sort se pune cel mai mare element ultimul");
+                CocktailSort(numar);
+                afisare(numar);
+                break;
+            case 2:
+                System.out.println("Prin bubble sort se aranjaza vectorul de la cel mai mic la cel mai mare crescator");
+                BubbleSort(numar);
+                afisare(numar);
+                break;
+            case 3:
+                System.out.println("Folosind selection sort");
+                SelectionSort(numar);
+                afisare(numar);
+                break;
+            case 4:
+                System.out.println("Folosind insertion sort");
+                InsertionSort(numar);
+                afisare(numar);
+                break;
+            case 5:
+                System.out.println("Folosind quick sort");
+                int mare=8* (numar.length)/8;
+                QuickSort(numar,0,mare-1);
+                afisare(numar);
+                break;
+            default:
+                System.out.println("Nu exista pt asa ceva");
+                break;
+        }
+        in.close();
+
+
+
+
+
+
+
+
+    }
+}

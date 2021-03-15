@@ -1,0 +1,74 @@
+/*9. Se defineste un sir de variabile de tip String care va fi populat
+cu toate cartile dintr-un pachet de joc. Se vor
+extrage aleator carti in pachet pana cand cartea curenta va fi de
+trefla cu valoarea mai mare decat 8. Sa se
+afiseze la fiecare pas cartea curenta si numarul de carti deja extrase.
+Indiciu: Folosiți un generator de numere aleatoare.
+Cartile deja extrase sunt eliminate.
+*/
+class Exercitii_labs {
+    public static void main(String[] args){
+        PachetDeCarti pachet=new PachetDeCarti();
+        int decide=0;
+        while(decide!=1){
+            decide=pachet.StartJoc();
+            if(decide==1) break;
+        }
+
+
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+PachetDeCarti
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.util.Random;
+class PachetDeCarti {
+    private String[] pachet;
+    PachetDeCarti(){
+        String trefla="A,2,3,4,5,6,7,8,9,10,j,q,k,";
+        String romb="A,2,3,4,5,6,7,8,9,10,j,q,k,";
+        String inimaRosie="A,2,3,4,5,6,7,8,9,10,j,q,k,";
+        String inimaNeagra="A,2,3,4,5,6,7,8,9,10,j,q,k";
+        String pachet_de_carti=trefla+romb+inimaRosie+inimaNeagra;
+        pachet=new String[pachet_de_carti.length()];
+        pachet=pachet_de_carti.split(",");
+
+    }
+    int StartJoc(){
+        Random random = new Random();
+        int numar = random.nextInt(52);
+        int decide = 0;
+        while (pachet[numar] != "") {
+            if (numar <= 12) {
+                if ((numar > 7 && pachet[numar]!="")||pachet[numar]=="A") {
+                    System.out.println("Cartea ta este " + pachet[numar] + " de trefla");
+                    decide++;
+                    return decide;
+                }
+                else{
+                    System.out.println("Cartea ta este " + pachet[numar] + " de trefla");
+                    pachet[numar] = "";
+                    return decide;
+                }
+
+            }
+            if (numar > 12 && numar <= 25) {
+                System.out.println("Cartea ta este " + pachet[numar] + " de romb");
+                pachet[numar] = "";
+                return decide;
+            }
+            if (numar > 25 && numar <= 38) {
+                System.out.println("Cartea ta este " + pachet[numar] + " de inima rosie");
+                pachet[numar] = "";
+                return decide;
+            }
+            if (numar > 38 && numar <= 51) {
+                System.out.println("Cartea ta este " + pachet[numar] + " de inima neagra");
+                pachet[numar] = "";
+                return decide;
+            }
+        }
+        return decide;
+    }
+}
