@@ -1,0 +1,28 @@
+import java.util.Scanner;
+public class Exercitii {
+	public void Facts(int a) {
+		if(a>0) {
+			double fact=1;
+			for(int i=2;i<=a;i++) {
+				fact*=i;
+			}
+			System.out.println("Factorialul este: "+fact);
+			
+		}
+		else if(a==0) {
+			System.out.println("Factorialul este 1");
+		}
+		else {
+			System.out.println("Numar negativ");
+		}
+	}
+	public static void main(String[] args) {
+		System.out.println("Introduce-ti numarul:");
+		Scanner ar=new Scanner(System.in);
+		int a=ar.nextInt();
+		Exercitii ex=new Exercitii();
+		ex.Facts(a);
+		
+	}
+
+}

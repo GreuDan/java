@@ -1,0 +1,29 @@
+import java.util.Scanner;
+//5. Scrieti o aplicatie Java in care cititi de la tastatuta mai multe numere intregi si verificati daca sunt
+//numere prime. Numarul de valori citite este preluat din linia de comanda
+public class Exercitii {
+	public void CommandLine(String[] argument) {
+		for(String arg:argument) {
+			int a=Integer.parseInt(arg);
+	    	int nr=0;
+			if (a <= 0) {
+		        System.out.println("Numbarul "+ a +" nu este numar prim");
+			}
+		    else {
+		        for (int i = 2; i <= a / 2; ++i) {
+		            if (a % i == 0) {
+		                nr++;
+		            }
+		            break;
+		        }
+		    }
+			if(nr==0)System.out.println("Numarul "+a+"  este numar prim");  
+			else System.out.println("Numarul "+a+" nu este numar prim");
+		}
+	}
+	public static void main(String[] args) {
+		Exercitii ex=new Exercitii();
+	    ex.CommandLine(args);
+	}
+
+}

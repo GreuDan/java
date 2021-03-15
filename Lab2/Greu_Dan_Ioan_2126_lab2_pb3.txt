@@ -1,0 +1,28 @@
+import java.util.Scanner;
+//3. Scrieti o aplicatie Java in care se citesc de la tastatura 2 valori intregi 
+//si se afiseaza cmmdc-ul valorilor.
+public class Exercitii {
+	public void CMMDC(int a,int b) {
+		if(a!=0) {
+			if(b!=0) {while(a != b){
+				if(a > b)
+					a = a - b; 
+		        if(b > a)
+		            b = b - a; 
+		    }
+		    System.out.println("Cmmdc-ul este:" +a);
+		}
+			}
+		else System.out.println("Introduce-ti numere diferite de 0");
+	}
+	public static void main(String[] args) {
+		System.out.println("Introduce-ti numarul:");
+		Scanner ar=new Scanner(System.in);
+		int a=ar.nextInt();
+		int b=ar.nextInt();
+		Exercitii ex=new Exercitii();
+		ex.CMMDC(a,b);
+		
+	}
+
+}

@@ -1,0 +1,25 @@
+import java.util.Scanner;
+//4. Scrieti o aplicatie Java in care cititi de la tastatura un numar intreg si afisati toti divizorii numarului
+//citi.
+public class Exercitii {
+	public void Divide(int a) {
+		if(a!=0 && a>1) {
+		    for(int i=1;i<=a/2;i++) {
+		    	if(a%i==0) {
+		    		System.out.println(i);
+		    	}
+		    }
+		}
+		else System.out.println("Introduce-ti numere mai mari de 1");
+	}
+	public static void main(String[] args) {
+		System.out.println("Introduce-ti numarul:");
+		Scanner ar=new Scanner(System.in);
+		int a=ar.nextInt();
+		Exercitii ex=new Exercitii();
+		System.out.println("Divizorii numarului "+a+" sunt:");
+		ex.Divide(a);
+		
+	}
+
+}

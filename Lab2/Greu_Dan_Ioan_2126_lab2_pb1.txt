@@ -1,0 +1,16 @@
+import java.util.Scanner;
+//1. Verificati functionalitatile mediului Eclipse considerand aplicatii stand-alone minimale cu operatii de
+//I/E
+
+public class Exercitii {
+	Exercitii(){
+		System.out.println("Numele tau complect este?");
+		Scanner in=new Scanner(System.in);
+		String user=in.nextLine();
+		System.out.println(user);
+	}
+	public static void main(String[] args) {
+		Exercitii ex=new Exercitii();
+	}
+
+}
