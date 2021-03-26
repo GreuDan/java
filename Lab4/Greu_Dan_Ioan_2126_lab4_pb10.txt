@@ -1,0 +1,161 @@
+/*10. Să se implementeze o clasă numită Cerc cu atributele private culoare (int),
+raza (float), pozitie in plan (2 coordonate intregi).
+Se definesc constructorii și metodele mutator și accesor specifice.
+Valoarea culorii este împărțită în 4 octeți reprezentând transparența, apoi cantitatile de R, G si B.
+În metoda main (inclusă într-o altă clasă) se citesc de la tastatură datele
+aferente unui șir de n obiecte de tip Cerc.
+Să se implementeze metodele care primesc ca parametru șirul de obiecte și afișează:
+- datele cercurilor a căror centru este inclus într-unul din cele 4 cadrane
+- datele cercurilor care sunt incluse în întregime într-unul din cele 4 cadrane
+- datele cercurilor care au centrele pe aceeași dreaptă orizontală sau verticală
+- datele cercurilor care au cantitatea de R, G sau B într-un anumit interval specificat
+*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Introduceti numarul de cercuri:");
+        int nr=in.nextInt();
+        Cerc[] cercuri=new Cerc[nr];
+        for (int i=0;i<nr;i++){
+            cercuri[i]=new Cerc();
+            System.out.println("Introduceti culoarea cercului: ");
+            int culoare=in.nextInt();
+            cercuri[i].setCuloare(culoare);
+            System.out.println("Introduceti raza cercului: ");
+            float raza=in.nextFloat();
+            cercuri[i].setRaza(raza);
+            System.out.println("Introduceti coordonata X: ");
+            int x=in.nextInt();
+            cercuri[i].setX(x);
+            System.out.println("Introduceti coordonata Y: ");
+            int y= in.nextInt();
+            cercuri[i].setY(y);
+        }
+        for(int i=0;i<nr;i++){
+            cercuri[i].Cadran();
+        }
+        for(int i=0;i<nr;i++){
+            cercuri[i].CadranComplet();
+        }
+        System.out.println("Cercuri pe axa X:");
+        for(int i=0;i<nr;i++){
+            if(cercuri[i].VerificareAxaX()==1) System.out.println("Cercul "+cercuri[i].getX()+" "+cercuri[i].getY());
+        }
+        System.out.println("Cercuri pe axa Y:");
+        for(int i=0;i<nr;i++){
+            if(cercuri[i].VerificareAxaY()==1) System.out.println("Cercul "+cercuri[i].getX()+" "+cercuri[i].getY());
+        }
+        System.out.println("Introduceti intervalul de culori:");
+        int mi=in.nextInt(),ma=in.nextInt();
+        if(ma<mi){
+            int vas=mi;
+            mi=ma;
+            ma=vas;
+        }
+        System.out.println("Cercurile din intervalul de culoare");
+        for(int i=0;i<nr;i++){
+            if(cercuri[i].VerificaCuloare(mi,ma)==1)
+                System.out.println("Cercul "+cercuri[i].getX()+" "+cercuri[i].getY());
+        }
+    }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Cerc.java
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.awt.*;
+
+class  Cerc {
+    private int culoare=0;
+    private float raza;
+    private int x;
+    private int y;
+
+    public int getCuloare() {
+        return culoare;
+    }
+    void Cadran(){
+        if(x>=0 && y>=0) System.out.println("Cercul in cadranul 1:" +x+" "+y);
+        else
+            if(x<=0 && y<=0) System.out.println("Cercul in cadranul 3:" +x+" "+y);
+            else
+                if(x<0 && y>0)   System.out.println("Cercul in cadranul 2:" +x+" "+y);
+                else
+                    if(x>=0 && y<0) System.out.println("Cercul in cadranul 4:" +x+" "+y);
+    }
+    int VerificareAxaY(){
+        if(y!=0 && x==0) return 1;
+        else return 0;
+    }
+    int VerificareAxaX(){
+        if(x!=0 && y==0) return 1;
+        else return 0;
+    }
+    void CadranComplet(){
+        if(x-raza>=0.0 && y-raza>=0.0) System.out.println("Cercul in cadranul 1 complet:" +x+" "+y);
+        else
+            if(x+raza<=0.0 && y+raza<=0.0) System.out.println("Cercul in cadranul 3 complet:" +x+" "+y);
+            else
+                if(x+raza<=0.0 && y-raza>=0.0)   System.out.println("Cercul in cadranul 2 complet:" +x+" "+y);
+                else
+                    if(x-raza>=0.0 && y+raza<=0.0) System.out.println("Cercul in cadranul 4 complet:" +x+" "+y);
+    }
+    void setCuloare(int culoare) {
+        this.culoare=culoare;
+    }
+    int getRed(int min,int max){
+        int red_min = new Color(min).getRed();
+        int red = new Color(culoare).getRed();
+        int red_max = new Color(max).getRed();
+        if(red_min<red && red<red_max) return 1;
+        else return 0;
+    }
+    int getGreen(int min,int max){
+        int green_min = new Color(min).getGreen();
+        int green = new Color(culoare).getGreen();
+        int green_max = new Color(max).getGreen();
+        if(green_min<green && green<green_max) return 1;
+        else return 0;
+    }
+    int getBlue(int min,int max){
+        int blue_min = new Color(min).getBlue();
+        int blue = new Color(culoare).getBlue();
+        int blue_max = new Color(max).getBlue();
+        if(blue_min<blue && blue<blue_max) return 1;
+        else return 0;
+    }
+    int getAlpha(){
+        int alpha = new Color(culoare).getAlpha();
+        return alpha;
+    }
+    int VerificaCuloare(int min,int max){
+        int val=getRed(min,max);
+        val+=getGreen(min,max);
+        val+=getBlue(min,max);
+        if(val==3) return 1;
+        else return 0;
+    }
+    float getRaza() {
+        return raza;
+    }
+
+    void setRaza(float raza) {
+        this.raza = raza;
+    }
+
+    int getX() {
+        return x;
+    }
+
+    void setX(int x) {
+        this.x = x;
+    }
+
+    int getY() {
+        return y;
+    }
+
+    void setY(int y) {
+        this.y = y;
+    }
+}

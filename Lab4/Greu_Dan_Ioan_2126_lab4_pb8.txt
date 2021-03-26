@@ -1,0 +1,71 @@
+/*8. Scrieți o aplicație Java care definește o cheie de autentificare de tipul:
+ XXXXX-XXXXX-XXXXX-XXXXX, unde X
+reprezintă un caracter ce poate fi cifră sau literă. Scrieți un program care
+verifică dacă această cheie are exact 4
+grupuri de caractere a câte 5 caractere fiecare și separate prin caracterul ‘-‘.
+De asemenea, calculați numărul de
+cifre și litere din cheia de autentificare. Numărul de cifre trebuie
+să fie mai mare decât numărul de litere, iar
+numărul de litere nu poate să fie 0. În cazul în care nu este îndeplinită cel
+ puțin o condiție din cele menționate
+anterior, afișați mesajul: ”Cheie de autentificare incorectă!*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        String key=in.nextLine();
+        Autentificare cheie=new Autentificare();
+        cheie.setKey(key);
+        if(cheie.ValidareCheie()!=0){
+            if(cheie.VerificareCheie()!=0)System.out.println("Cheie de autentificare incorectă!");
+        }else  System.out.println("Cheie de autentificare incorectă!");
+
+    }
+
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Autentificare.java
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class Autentificare {
+    private String[]key=new String[5];;
+    Autentificare(){}
+
+    void setKey(String cheie){
+        key=cheie.split("-");
+    }
+    int ValidareCheie(){
+        int ok=0;
+        if(key.length==5){
+            for(String format:key){
+                int valid=format.length();
+                if(valid!=5){
+                    System.out.println(valid);
+                    ok=1;
+                    break;
+                }
+            }
+        }
+        else return 0;
+        if(ok!=0) return 0;
+        else return 1;
+    }
+    int VerificareCheie(){
+        int cifre=0;
+        int litere=0;
+        for(String cheie:key){
+            for(int i=0;i<cheie.length();i++){
+                if('0'-cheie.charAt(i)>=0 && '0'-cheie.charAt(i)<=9){
+                    cifre++;
+                }
+                if('a'-cheie.charAt(i)>=0 && 'z'-cheie.charAt(i)<=26){
+                    litere++;
+                }
+                if('A'-cheie.charAt(i)>=0 && 'Z'-cheie.charAt(i)<=26){
+                    litere++;
+                }
+            }
+        }
+        if(litere<cifre && litere!=0) return 1;
+        return 0;
+    }
+}

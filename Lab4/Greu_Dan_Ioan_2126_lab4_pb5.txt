@@ -1,0 +1,28 @@
+/*5. Construiti o aplicatie Java care sa testeze metodele noi ale clasei String,
+introduse in Java11 .*/
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+class Exercitii_labs {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Metoda isBlank():");
+        String sir1="Ana\nare\nmere";
+        String sir2="";
+        System.out.println("Sirul 1 este gol: "+sir1.isBlank()+" \nSirul 2 este gol: "+sir2.isBlank());
+        List lines = sir1.lines().collect(Collectors.toList());
+        System.out.println("Metoda lines() returneaza o lista de elemente separate de terminali de linie");
+        System.out.println(lines);
+        String sir3 = "  Ana,  \tare\t mere ";
+        System.out.println("Metoda strip():");
+        System.out.println(sir3.strip());
+        System.out.println("Metoda stripLeading():");
+        System.out.println(sir3.stripLeading());
+        System.out.println("Metoda stripTrailing():");
+        System.out.println(sir3.stripTrailing());
+        String nume="Dan";
+        System.out.println("Metoda repeat():");
+        System.out.println(nume.repeat(5));
+    }
+}

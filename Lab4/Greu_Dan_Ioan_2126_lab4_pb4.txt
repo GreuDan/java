@@ -1,0 +1,76 @@
+/*4. Scrieți o clasă Java numită Persoană cu atributele private:
+nume (String), latitudine și longitudine (float).
+Clasa conține un constructor explicit fără parametri care inițializează numele cu
+null și latitudinea și longitudinea cu 0.
+Metoda finalize() va fi implementată pentru a afișa un mesaj la distrugerea obiectelor.
+ Atributele clasei se pot modifica prin metodele mutator specifice setNume(),
+ setLatitudine() și setLongitudine(). Atributele vor fi
+returnate prin metode accesor specifice. Instanțiați n obiecte, citiți și
+setati valorile atributelor, apoi afișați datele tuturor obiectelor*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Introduceti numarul de persoane");
+        int nr=in.nextInt();
+        Persoana[] persoane=new Persoana[nr];
+        String nume;
+        int lat,lon;
+        for (int i=0;i<nr;i++){
+            persoane[i]=new Persoana();
+            System.out.println("Introduceti nume:");
+            nume=in.next();
+            persoane[i].setNume(nume);
+            System.out.println("Introduceti latitudine:");
+            lat= in.nextInt();
+            persoane[i].setLatitudine(lat);
+            System.out.println("Introduceti longitudine:");
+            lon=in.nextInt();
+            persoane[i].setLongitudine(lon);
+        }
+        for (int i=0;i<nr;i++){
+            System.out.println("Datele unei persoane sunt: "+persoane[i].getNume()+" lat.: "+persoane[i].getLatitudine()+" lon. : "+persoane[i].getLongitudine());
+        }
+        for (int i=0;i<nr;i++){
+            persoane[i].finalize();
+        }
+    }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Persoana.java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class Persoana{
+    private String nume=null;
+    private int latitudine=0;
+    private int longitudine=0;
+
+    public String getNume() {
+        return nume;
+    }
+
+    void setNume(String nume) {
+        this.nume="";
+        this.nume=nume;
+    }
+
+    int getLatitudine() {
+        return latitudine;
+    }
+    void setLatitudine(int latitudine) {
+        this.latitudine = latitudine;
+    }
+
+    int getLongitudine() {
+        return longitudine;
+    }
+
+    void setLongitudine(int longitudine) {
+        this.longitudine = longitudine;
+    }
+    public void finalize(){
+        nume=null;
+        longitudine=0;
+        latitudine=0;
+        System.out.println("Obiect distrus cu succes!");
+    }
+}

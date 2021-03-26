@@ -1,0 +1,228 @@
+/*7. Scrieți o aplicație care definește o clasă denumită Copil . Definiți metodele
+ și variabilele membre ale acestei clase
+pentru următoarele acțiuni/caracteristici.
+- numele copilului
+- data nașterii
+- copilul știe să se prezinte: ”Salut, numele meu este ...”
+- copilul știe să spună câti ani are
+- copilul știe să adune două numere mai mici decât 10 și să returneze rezultatul sub forma: ”Suma lui X și Y este Z”
+- copilul poate să spună alfabetul în forma directă, cât și inversă
+- copilul știe să spună “La revedere”
+- copilul știe să coloreze o tablă de șah de dimensiune dată folosind culori alternative (pentru culori folosiți
+simbolurile 1 și 0)
+- copilul știe să joace X-0 singur 😊 (!!! Folosiți aplicația realizată în tema anterioară)
+Precizări: numele copilului și data sa de naștere nu pot fi accesate din afara clasei.
+Toate informațiile despre un Copil vor fi completate cu ajutorul unui obiect de tip Copil, prin intermediul
+variabilelor și a metodelor corespunzătoare acestui obiect.
+Interacțiunea cu un copil se va face tot prin intermediul unui obiect instanțiat în main().*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        Copil dan=new Copil();
+        System.out.println("Introduceti nume: ");
+        String nume=in.nextLine();
+        String data=in.nextLine();
+        dan.setNume(nume);
+        dan.setData(data);
+        dan.Prezinta();
+        dan.Varsta();
+        dan.Suma();
+        dan.SpuneAlfabet();
+        dan.JoacaTicTacToe();
+        dan.ColoreazaTabla();
+
+
+    }
+
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Copil.java
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.util.Random;
+import java.util.Scanner;
+class Copil {
+    private String nume;
+    private String[] data=new String[3];
+    Copil(String nume,String data){
+        this.nume=nume;
+        this.data=data.split(":");
+    }
+    Copil(){}
+    void setNume(String nume){
+        this.nume=nume;
+    }
+    void setData(String data){
+        this.data=data.split(":");
+    }
+    String getNume() {
+        return nume;
+    }
+    String[] getData(){
+        return data;
+    }
+    void Prezinta(){
+        System.out.println("Salut, numele meu este "+getNume());
+    }
+    void Varsta(){
+        String an=data[2];
+        if(!an.valueOf(0).equals("0")){
+            System.out.println("Am varsta de "+(20-Integer.parseInt(an)+" ani"));
+        }
+    }
+    void Suma(){
+        Random random = new Random();
+        int a=random.nextInt(10);
+        int b=random.nextInt(10);
+        System.out.println("Suma lui a și b este "+(a+b));
+    }
+    void SpuneAlfabet(){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Alfabet A-Z SAU Z-A:(0-1)");
+        int a=sc.nextInt();
+        if(a==0){
+            char alfabet='A';
+            for(int i=0;i<26;i++){
+                System.out.print((char)(alfabet+i));
+            }
+            System.out.println("\n");
+        }
+        else {
+            char alfabet='Z';
+            for(int i=0;i<26;i++){
+                System.out.print((char)(alfabet-i));
+            }
+            System.out.println("\n");
+        }
+    }
+    void ColoreazaTabla(){
+        System.out.println("Tabla de sah:");
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if(i%2==0) System.out.print("0 ");
+                else System.out.print("1 ");
+            }
+            System.out.println("\n");
+        }
+    }
+    void JoacaTicTacToe(){
+        TicTacToe operator=new TicTacToe(3);
+        operator.AfisareTabla();
+        int count=1;
+        while(true){
+            if(count%2!=0) operator.GenereazaSimbol("X");
+            else operator.GenereazaSimbol("O");
+            operator.AfisareTabla();
+            count++;
+            if(operator.Castigator()!=0) break;
+        }
+    }
+}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+TicTacToe.java
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.util.Random;
+class TicTacToe {
+    int size;
+    String[] verificare;
+    String[][] tabla;
+    TicTacToe(int size){
+        this.size = size;
+        verificare=new String[this.size*this.size];
+        for(int i=0;i<this.size*this.size;i++){
+            verificare[i]="0";
+        }
+        tabla=new String[this.size][this.size];
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                tabla[i][j]="*";
+            }
+        }
+    }
+    void AfisareTabla() {
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++) {
+                System.out.print(tabla[i][j]);
+            }
+            System.out.println("\n");
+        }
+        System.out.println("-----------");
+    }
+    void GenereazaSimbol(String simbol1){
+        Random random=new Random();
+        int element=random.nextInt(size*size+1);
+        if(element==size*size) element=-1;
+        if(element==-1) element+=1;
+        if(verificare[element].equals("0")){
+            verificare[element]="1";
+            int nr=0;
+            for (int i = 0; i < size; i++){
+                for (int j = 0; j < size; j++) {
+                    if(nr==element) tabla[i][j]=simbol1;
+                    nr++;
+                }
+            }
+        }
+        else{
+            GenereazaSimbol(simbol1);
+        }
+    }
+    int Castigator(){
+        int ok=0;
+        for(int i=0;i<size;i++){
+            ok=0;
+            for(int j=0;j<size-1;j++){
+                if( !(tabla[i][j].equals("*"))){
+                    if(tabla[i][j].equals(tabla[i][j+1])) ok++;
+                }
+
+            }
+            if(ok==size){
+                System.out.println("Joc terminat! Castigator ");
+                return 1;
+            }
+        }
+        for(int i=0;i<size;i++){
+            int j;
+            ok=0;
+            for(j=0;j<size-1;j++){
+                if( !(tabla[j][i].equals("*"))){
+                    if(tabla[j][i].equals(tabla[j+1][i])) ok++;
+                }
+            }
+            if(ok==size){
+                System.out.println("Joc terminat!");
+                return 1;
+            }
+        }
+        for(int i=0;i<size-1;i++){
+            ok=0;
+            if(!(tabla[i][i].equals("*")))
+                if(tabla[i][i].equals(tabla[i+1][i+1]))ok++;
+        }
+        if(ok==size){
+            System.out.println("Joc terminat!");
+            return 1;
+        }
+        for(int i=0;i<size-1;i++) {
+            ok=0;
+            for(int j=0;j<size;j++){
+                if(!(tabla[i][size-1-j].equals("*")))
+                    if(tabla[i][size-1-j].equals(tabla[i+1][size-1-j])) ok++;
+            }
+        }
+        if(ok==size){
+            System.out.println("Joc terminat!");
+            return 1;
+        }
+        int count=0;
+        for(int i=0;i<size*size;i++){
+            if(verificare[i].equals("1")) count++;
+        }
+        if(count==size*size){
+            System.out.println("Joc terminat!");
+            return 1;
+        }
+        return 0;
+    }
+}

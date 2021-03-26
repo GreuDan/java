@@ -1,0 +1,128 @@
+/*9. Să se definească o clasa numita Student cu atributele private nume, nr. tel si media
+(constructori, metode setter
+și getter). În metoda main (inclusă într-o altă clasă) se
+crează un tablou unidimensional de obiecte de tip
+Student, cu lungimea specificată de catre utilizator.
+Citirea datelor fiecărui student se face în formatul
+nume^^^nr_tel^^^media. Dacă informația specifică numarului de tel. nu este validă (10 caractere numerice, cu
+sau fară caractere speciale de tip spațiu, - sau .),
+se cere reintroducerea întregului șir de caractere. Să se
+ordoneze și să se afișeze studenții după nume și după medie.*/
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args){
+        Scanner in=new Scanner(System.in);
+        System.out.println("Numar de studenti: ");
+        int nr=in.nextInt();
+        Student[] studenti=new Student[nr];
+        studenti[0]=new Student();
+        System.out.println("Introduceti datele studentului:");
+        String date=in.next();
+        studenti[0].setDate(date);
+        int valid=studenti[0].VerificareTelefon();
+        if(valid==0){
+            System.out.println("Introduceti datele studentului din nou: ");
+            date=in.next();
+            studenti[0].setDate(date);
+        }
+        for(int i=1;i< nr;i++) {
+            studenti[i] = new Student();
+            System.out.println("Introduceti datele studentului:");
+            date = in.next();
+            studenti[i].setDate(date);
+            valid = studenti[i].VerificareTelefon();
+            if (valid == 0) {
+                System.out.println("Introduceti datele studentului din nou: ");
+                date = in.next();
+                studenti[i].setDate(date);
+            }
+        }
+        for(int i=0;i<nr;i++){
+            for(int j=1;j<nr;j++){
+                String nume1=studenti[i].getNume();
+                String nume2=studenti[j].getNume();
+                if(nume1.compareToIgnoreCase(nume2)<1){
+                    if(nume1.compareToIgnoreCase(nume2)==0){
+                        String medie1=studenti[i].getMedia();
+                        String medie2=studenti[j].getMedia();
+                        if(medie1.compareToIgnoreCase(medie2)<0)
+                            Student.Copiere(studenti[i],studenti[j]);
+                    }
+                    else Student.Copiere(studenti[i],studenti[j]);
+                }
+            }
+        }
+        for(int i=0;i<nr;i++){
+            System.out.println("Nume student: "+studenti[i].getNume()+" media: "+studenti[i].getMedia());
+        }
+    }
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Student.java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.util.StringTokenizer;
+
+class  Student {
+    private String nume;
+    private String tel;
+    private String media;
+    Student(){
+    }
+    void setDate(String date){
+        StringTokenizer st = new StringTokenizer(date, "^");
+        int nr=0;
+        while(st.hasMoreTokens()){
+            String token = st.nextToken();
+            if(nr==0){
+                nume=token;
+                nr++;
+            }else
+                if(nr==1){
+                    tel=token;
+                    nr++;
+                }
+                else
+                    if(nr==2){
+                        media=token;
+                    }
+        }
+    }
+    int VerificareTelefon() {
+        int ok=0;
+        if (tel.length() == 10) {
+            for (int i = 0; i < 10; i++) {
+                if ((int)(tel.charAt(i))-'0'>=0 && (int)(tel.charAt(i)-'0')<=9)
+                    ok++;
+            }
+
+        }
+        if(ok==10) return 1;
+        else return 0;
+    }
+    static void Copiere(Student Nr1,Student Nr2){
+        Student st=new Student();
+        st=Nr1;
+        Nr1=Nr2;
+        Nr2=st;
+    }
+    public String getTel() {
+        return tel;
+    }
+
+    void setTel(String tel) {
+        this.tel = tel;
+    }
+    String getMedia() {
+        return media;
+    }
+    void setMedia(String media) {
+        this.media = media;
+    }
+    String getNume() {
+        return nume;
+    }
+    void setNume(String nume) {
+        this.nume = nume;
+    }
+
+}

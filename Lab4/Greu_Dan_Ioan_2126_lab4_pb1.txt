@@ -1,0 +1,64 @@
+/*1. Scrieți o clasă Methods in care să aveți 3 metode:
+o metodă cu număr variabil de parametri de tip intreg, care
+returnează media aritmetică a parametrilor;
+ o altă metodă în care să definiți un tablou unidimensional de n
+numere de tip double (n fiind parametrul metodei și care va fi
+ citit în main() de la tastatură), elementele acestuia
+vor primi valori generate aleator și metoda va returna acest tablou;
+ o metodă statică ce primește ca parametru
+un tablou de caractere, convertește caracterele respective în majuscule și
+formează din acest șir un obiect
+String, pe care îl returnează. Din metoda main(), definită intr-o altă clasă,
+ apelați metodele clasei Methods și
+afișați rezultatele pe ecran (valorile de apel pentru prima metodă și șirul
+ de caractere cu care se apelează a 3-a
+metodă se vor defini în main()).*/
+import java.util.Random;
+import java.util.Scanner;
+class Exercitii_labs {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Random r=new Random();
+        System.out.println("Introduceti nr de elemente:");
+        int nr=in.nextInt();
+        Methods met=new Methods();
+        int[] vector=new int[nr];
+        for(int i=0;i<nr;i++){
+            vector[i]=r.nextInt(100);
+        }
+        System.out.println("Media elementelor random intreaga"+met.Varietate(vector));
+        System.out.println("Introduceti elemente:");
+        System.out.println("Vectorul este: "+met.Vector(nr));
+        System.out.println("Introduceti "+nr+" elementr in sirul de caractere:");
+        char[] sir=new char[nr];
+        for(int i=0;i<nr;i++){
+            sir[i]=in.next().charAt(0);
+        }
+        System.out.println("Sirul caracterelor este: "+Methods.SirulConvertit(sir));
+    }
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Methods.java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import java.util.Scanner;
+
+class Methods{
+    int Varietate(int ...var){
+        int media=0;
+        for(int i=0;i<var.length;i++){
+            media+=var[i];
+        }
+        return media/var.length;
+    }
+    double[] Vector(int nr){
+        Scanner in = new Scanner(System.in);
+        double[] vect=new double[nr];
+        for(int i=0;i<nr;i++){
+            vect[i]=in.nextDouble();
+        }
+        return vect;
+    }
+    static String SirulConvertit(char [] sir){
+        return sir.toString().toUpperCase();
+    }
+}
